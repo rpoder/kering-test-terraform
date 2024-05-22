@@ -1,13 +1,15 @@
-data "aws_ecs_cluster" "cluster" {
-  cluster_name = var.cluster_name
+import {
+	to = aws_ecs_cluster.cluster
+	id = "test_ronan"
 }
 
-
-
+resource "aws_ecs_cluster" "cluster" {
+	name = var.cluster_name
+}
 
 resource "aws_ecs_service" "service" {
   name            = "${var.project_name}-SVC"
-  cluster         = data.aws_ecs_cluster.cluster.id
+  cluster         = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.td.arn
   desired_count   = 1
   launch_type     = "FARGATE"
