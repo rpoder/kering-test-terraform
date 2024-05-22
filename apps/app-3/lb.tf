@@ -15,7 +15,7 @@ resource "aws_lb" "lb" {
   enable_deletion_protection = true
 
   tags = {
-    Name = "${var.project_name}-LB"
-	ProjetName = var.project_name
+    Name       = "${var.project_name}-LB"
+    ProjetName = var.project_name
   }
 }

@@ -12,8 +12,8 @@ resource "aws_ecs_service" "service" {
   }
   desired_count = 1
   load_balancer {
-	target_group_arn = aws_ecs_task_definition.td.arn
-	container_name = "${var.project_name}-CONTAINER"
-	container_port = 80
+    target_group_arn = aws_ecs_task_definition.td.arn
+    container_name   = "${var.project_name}-CONTAINER"
+    container_port   = 80
   }
 }
