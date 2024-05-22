@@ -1,5 +1,5 @@
 data "aws_ecs_cluster" "cluster" {
-  cluster_name = "test_ronan"
+  cluster_name = var.cluster_name
 }
 
 resource "aws_ecs_service" "service" {
@@ -15,5 +15,9 @@ resource "aws_ecs_service" "service" {
     target_group_arn = aws_lb_target_group.tg.arn
     container_name   = "my-nginx"
     container_port   = 80
+  }
+  tags = {
+    Name       = "${var.project_name}-SG"
+    ProjetName = var.project_name
   }
 }
