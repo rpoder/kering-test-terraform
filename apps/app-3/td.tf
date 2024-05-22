@@ -5,8 +5,8 @@ resource "aws_ecs_task_definition" "td" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = 256
   memory                   = 512
-  task_role_arn            = aws_iam_role.role.arn
-  execution_role_arn       = aws_iam_role.role.arn
+  task_role_arn            = aws_iam_role.service_role.arn
+  execution_role_arn       = aws_iam_role.service_role.arn
 
   container_definitions = jsonencode([
     {
@@ -21,8 +21,9 @@ resource "aws_ecs_task_definition" "td" {
           hostPort      = 80
         }
       ]
+      healthcheck : {
+        command : ["CMD-SHELL", "echo 'healthy' || exit 1"]
+      }
     },
   ])
-
-
 }

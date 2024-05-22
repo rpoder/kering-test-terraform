@@ -7,6 +7,7 @@ resource "aws_ecs_service" "service" {
   cluster         = data.aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.td.arn
   desired_count   = 1
+  launch_type     = "FARGATE"
   network_configuration {
     subnets         = var.private_subnets
     security_groups = [aws_security_group.sg.id]
@@ -17,7 +18,7 @@ resource "aws_ecs_service" "service" {
     container_port   = 80
   }
   tags = {
-    Name       = "${var.project_name}-SG"
+    Name       = "${var.project_name}-SVC"
     ProjetName = var.project_name
   }
 }

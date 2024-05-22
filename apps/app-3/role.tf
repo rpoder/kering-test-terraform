@@ -1,4 +1,4 @@
-resource "aws_iam_role" "role" {
+resource "aws_iam_role" "service_role" {
   name = "${var.project_name}-ROLE"
 
   assume_role_policy = jsonencode(
@@ -9,7 +9,7 @@ resource "aws_iam_role" "role" {
           "Sid" : "",
           "Effect" : "Allow",
           "Principal" : {
-            "Service" : "ecs.amazonaws.com"
+            "Service" : "ecs-tasks.amazonaws.com"
           },
           "Action" : "sts:AssumeRole"
         }
@@ -24,6 +24,6 @@ resource "aws_iam_role" "role" {
 }
 
 resource "aws_iam_role_policy_attachment" "role_policy" {
-  role       = aws_iam_role.role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
+  role       = aws_iam_role.service_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
