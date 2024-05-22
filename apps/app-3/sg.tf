@@ -1,23 +1,23 @@
-data "aws_vpc" "selected" {
+data "aws_vpc" "vpc" {
   tags = {
     Name = "shared-services"
   }
 }
-
-# import du cluster
-
-# output "vpc_arn" {
-#   value = data.aws_vpc.selected.arn
-# }
+locals {
+  vpc_id = split("/",data.aws_vpc.vpc.arn).1
+}
 
 resource "aws_security_group" "sg" {
   name   = "${var.project_name}-SG"
-  vpc_id = var.vpc_id
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+  vpc_id = local.vpc_id
+  dynamic "ingress" {
+    for_each = var.ingress
+    content {
+      from_port   = ingress.value.from_port
+	  to_port = ingress.value.to_port
+	  protocol = ingress.value.protocol
+	  cidr_blocks = ingress.value.cidr_blocks
+    }
   }
   egress {
     from_port   = 0

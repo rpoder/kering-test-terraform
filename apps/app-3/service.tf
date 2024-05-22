@@ -2,6 +2,9 @@ data "aws_ecs_cluster" "cluster" {
   cluster_name = var.cluster_name
 }
 
+
+
+
 resource "aws_ecs_service" "service" {
   name            = "${var.project_name}-SVC"
   cluster         = data.aws_ecs_cluster.cluster.id
