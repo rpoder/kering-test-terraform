@@ -1,3 +1,15 @@
+data "aws_vpc" "selected" {
+  tags = {
+    Name = "shared-services"
+  }
+}
+
+# import du cluster
+
+# output "vpc_arn" {
+#   value = data.aws_vpc.selected.arn
+# }
+
 resource "aws_security_group" "sg" {
   name   = "${var.project_name}-SG"
   vpc_id = var.vpc_id
