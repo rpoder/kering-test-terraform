@@ -4,7 +4,7 @@ data "aws_vpc" "vpc" {
   }
 }
 locals {
-  vpc_id = split("/",data.aws_vpc.vpc.arn).1
+  vpc_id = split("/", data.aws_vpc.vpc.arn).1
 }
 
 resource "aws_security_group" "sg" {
@@ -14,9 +14,9 @@ resource "aws_security_group" "sg" {
     for_each = var.ingress
     content {
       from_port   = ingress.value.from_port
-	  to_port = ingress.value.to_port
-	  protocol = ingress.value.protocol
-	  cidr_blocks = ingress.value.cidr_blocks
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
     }
   }
   egress {

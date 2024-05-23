@@ -20,6 +20,10 @@ variable "cluster_name" {
   type    = string
 }
 
+variable "route53_zone_id" {
+  type = string
+}
+
 variable "ingress" {
   type = list(object({
     from_port   = number
